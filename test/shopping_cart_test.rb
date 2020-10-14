@@ -9,6 +9,7 @@ class ShoppingCardTest < Minitest::Test
         @cart = ShoppingCart.new("King Soopers", "30items")
         @product1 = Product.new(:paper, 'toilet paper', 3.70, '10')
         @product2 = Product.new(:meat, 'chicken', 4.50, '2')
+        @product3 = Product.new(:paper, 'tissue paper', 1.25, '1')
     end
     
     def test_it_exists
@@ -37,4 +38,37 @@ class ShoppingCardTest < Minitest::Test
         details_data = {name: "King Soopers", capacity: 30}
         assert_equal details_data, @cart.details
     end
+    #Iteration 3
+
+    def test_it_can_return_total_products
+        @cart.add_product(@product1)
+        @cart.add_product(@product2)
+        @cart.add_product(@product3)
+        assert_equal 13 , @cart.total_number_of_products
+    end
+
+    def test_it_can_return_state_of_is_full
+        @cart_2 = ShoppingCart.new("King Soopers", "30items")
+        @big_product = Product.new(:paper, 'tissue paper', 1.25, '40')
+
+        @cart.add_product(@product1)
+        @cart.add_product(@product2)
+        @cart.add_product(@product3)
+
+        @cart_2.add_product(@big_product)
+
+        assert @cart_2.is_full?
+        refute @cart.is_full?
+    end
+
+    def test_it_can_index_products_by_category
+        @cart.add_product(@product1)
+        @cart.add_product(@product2)
+        @cart.add_product(@product3)
+
+        assert_equal [@product1,@product3] , @cart.products_by_category(:paper)
+    end
+
+    #Iteration 4
 end
+
