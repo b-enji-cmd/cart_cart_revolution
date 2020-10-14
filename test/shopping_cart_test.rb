@@ -70,5 +70,47 @@ class ShoppingCardTest < Minitest::Test
     end
 
     #Iteration 4
+
+    def test_it_can_calculate_percentage_occupied
+
+        @product4 = Product.new(:paper, 'toilet paper', 3.70, '10')
+        @product5 = Product.new(:meat, 'chicken', 4.50, '2')
+        @product6 = Product.new(:paper, 'tissue paper', 1.25, '1')
+        @cart.add_product(@product4)
+        @cart.add_product(@product5)
+        @cart.add_product(@product6)
+
+        
+        assert_equal 43.33 , @cart.percentage_occupied
+    end
+
+    def test_it_can_sort_products_by_quantity
+        @product4 = Product.new(:paper, 'toilet paper', 3.70, '10')
+        @product5 = Product.new(:meat, 'chicken', 4.50, '2')
+        @product6 = Product.new(:paper, 'tissue paper', 1.25, '1')
+        @product7 = Product.new(:produce, 'apples', 0.99, '20')
+        @cart.add_product(@product4)
+        @cart.add_product(@product5)
+        @cart.add_product(@product6)
+        @cart.add_product(@product7)
+
+        assert_equal [@product7, @product4, @product5, @product6] , @cart.sorted_products_by_quantity
+    end
+    def test_it_can_give_product_breakdown
+        @product4 = Product.new(:paper, 'toilet paper', 3.70, '10')
+        @product5 = Product.new(:meat, 'chicken', 4.50, '2')
+        @product6 = Product.new(:paper, 'tissue paper', 1.25, '1')
+        @product7 = Product.new(:produce, 'apples', 0.99, '20')
+        @cart.add_product(@product4)
+        @cart.add_product(@product5)
+        @cart.add_product(@product6)
+        @cart.add_product(@product7)
+        
+        breakdown_data = {:meat => @product5 , :paper => @product4,:paper => @product6, :produce=> @product7}
+        assert_equal breakdown_data , @cart.product_breakdown
+    end
+
 end
+
+#require'pry';binding.pry
 

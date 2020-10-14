@@ -30,4 +30,22 @@ class ShoppingCart
     def products_by_category(category)
         @products.find_all{|product| product.category == category}
     end
+
+    def percentage_occupied
+        (((total_number_of_products).to_f / @capacity.to_f ) *100).truncate(2)
+    end
+
+    def sorted_products_by_quantity
+        @products.sort_by{|product| product.quantity}.reverse
+    end
+
+    def product_breakdown
+        breakdown = Hash.new
+
+        @products.each do |product|
+            breakdown[product.category] = product
+        end
+
+        breakdown
+    end
 end
